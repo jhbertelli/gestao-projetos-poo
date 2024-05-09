@@ -1,32 +1,32 @@
 import java.sql.Date;
 
 public class Tarefa {
-	
-	private String nome;
-	private String prazo;
-	private int prioridade;
-	private int status;
 
-	public String getNome() {
-		return nome;
-	}
+    private String nome;
+    private String prazo;
+    private int prioridade;
+    private int status;
 
-	public String getPrazo() {
-		return prazo;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public int getPrioridade() {
-		return prioridade;
-	}
+    public String getPrazo() {
+        return prazo;
+    }
 
-	public int getStatus() {
-		return status;
-	}
+    public int getPrioridade() {
+        return prioridade;
+    }
 
-	Tarefa(String nome, String prazo, int prioridade){
-		this.nome=nome;
-		this.prazo=prazo;
-		this.prioridade=prioridade;
-	}
-	
+    public int getStatus() {
+        return status;
+    }
+
+    Tarefa(String nome, String prazo, int prioridade) {
+        this.nome = nome;
+        this.prazo = prazo;
+        this.prioridade = prioridade;
+    }
+
 }

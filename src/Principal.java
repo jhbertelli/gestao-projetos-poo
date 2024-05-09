@@ -3,8 +3,8 @@ import java.text.ParseException;
 
 public class Principal {
 
-	public static void main(String[] args) {
-		Menu.exibirMenu();
-	}
+    public static void main(String[] args) {
+        Menu.exibirMenu();
+    }
 
 }

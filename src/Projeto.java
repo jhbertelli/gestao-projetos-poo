@@ -5,149 +5,148 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 
 public class Projeto {
-	
-	private String titulo;
-	private String cliente;
-	private ArrayList<Recurso> listaDeRecursos = new ArrayList<Recurso>();
-	private ArrayList<Pessoa> listaDePessoas = new ArrayList<Pessoa>();
-	private String dataInicial;
-	private String dataFinal;
-	private ArrayList<Tarefa> listaDeTarefas = new ArrayList<Tarefa>();
-	private ArrayList<TarefaAlocada> listaDeTarefasAlocadas = new ArrayList<TarefaAlocada>();
-	private int status;
-	
-	//Não é necessário representar no diagrama os getters and setters
-	
-	Projeto (String titulo, String cliente, String dataInicial, String dataFinal){
-		this.titulo=titulo;
-		this.cliente=cliente;
-		this.dataInicial=dataInicial;
-		this.dataFinal=dataFinal;
-	}
-	
-	public String getTitulo() {
-		return titulo;
-	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
+    private String titulo;
+    private String cliente;
+    private ArrayList<Recurso> listaDeRecursos = new ArrayList<Recurso>();
+    private ArrayList<Pessoa> listaDePessoas = new ArrayList<Pessoa>();
+    private String dataInicial;
+    private String dataFinal;
+    private ArrayList<Tarefa> listaDeTarefas = new ArrayList<Tarefa>();
+    private ArrayList<TarefaAlocada> listaDeTarefasAlocadas = new ArrayList<TarefaAlocada>();
+    private int status;
 
-	public String getCliente() {
-		return cliente;
-	}
+    //Não é necessário representar no diagrama os getters and setters
 
-	public void setArea(String cliente) {
-		this.cliente = cliente;
-	}
+    Projeto(String titulo, String cliente, String dataInicial, String dataFinal) {
+        this.titulo = titulo;
+        this.cliente = cliente;
+        this.dataInicial = dataInicial;
+        this.dataFinal = dataFinal;
+    }
 
-	public ArrayList<Recurso> getListaDeRecursos() {
-		return listaDeRecursos;
-	}
+    public String getTitulo() {
+        return titulo;
+    }
 
-	public void setListaDeRecursos(ArrayList<Recurso> listaDeRecursos) {
-		this.listaDeRecursos = listaDeRecursos;
-	}
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
 
-	public ArrayList<Pessoa> getListaDePessoas() {
-		return listaDePessoas;
-	}
+    public String getCliente() {
+        return cliente;
+    }
 
-	public void setListaDePessoas(ArrayList<Pessoa> listaDePessoas) {
-		this.listaDePessoas = listaDePessoas;
-	}
+    public void setArea(String cliente) {
+        this.cliente = cliente;
+    }
 
-	public String getDataInicial() {
-		return dataInicial;
-	}
+    public ArrayList<Recurso> getListaDeRecursos() {
+        return listaDeRecursos;
+    }
 
-	public void setDataInicial(String dataInicial) {
-		this.dataInicial = dataInicial;
-	}
+    public void setListaDeRecursos(ArrayList<Recurso> listaDeRecursos) {
+        this.listaDeRecursos = listaDeRecursos;
+    }
 
-	public String getDataFinal() {
-		return dataFinal;
-	}
+    public ArrayList<Pessoa> getListaDePessoas() {
+        return listaDePessoas;
+    }
 
-	public void setDataFinal(String dataFinal) {
-		this.dataFinal = dataFinal;
-	}
+    public void setListaDePessoas(ArrayList<Pessoa> listaDePessoas) {
+        this.listaDePessoas = listaDePessoas;
+    }
 
-	public ArrayList<Tarefa> getListaDeTarefas() {
-		return listaDeTarefas;
-	}
+    public String getDataInicial() {
+        return dataInicial;
+    }
 
-	public void setListaDeTarefas(ArrayList<Tarefa> listaDeTarefas) {
-		this.listaDeTarefas = listaDeTarefas;
-	}
+    public void setDataInicial(String dataInicial) {
+        this.dataInicial = dataInicial;
+    }
 
-	public ArrayList<TarefaAlocada> getListaDeTarefasAlocadas() {
-		return listaDeTarefasAlocadas;
-	}
+    public String getDataFinal() {
+        return dataFinal;
+    }
 
-	public void setListaDeTarefasAlocadas(ArrayList<TarefaAlocada> listaDeTarefasAlocadas) {
-		this.listaDeTarefasAlocadas = listaDeTarefasAlocadas;
-	}
+    public void setDataFinal(String dataFinal) {
+        this.dataFinal = dataFinal;
+    }
 
-	public int getStatus() {
-		return status;
-	}
+    public ArrayList<Tarefa> getListaDeTarefas() {
+        return listaDeTarefas;
+    }
 
-	public void setStatus(int status) {
-		this.status = status;
-	}
+    public void setListaDeTarefas(ArrayList<Tarefa> listaDeTarefas) {
+        this.listaDeTarefas = listaDeTarefas;
+    }
 
-	public void adicionarRecurso(Recurso recurso) {
-		this.listaDeRecursos.add(recurso);
-	}
-	
-	public void adicionarPessoa(Pessoa pessoa) {
-		this.listaDePessoas.add(pessoa);
-	}
-	
-	public void adicionarTarefa(Tarefa tarefa) {
-		this.listaDeTarefas.add(tarefa);
-	}
-	
-	
-	public void alocarTarefa(Pessoa pessoa, Tarefa tarefa) {
-		TarefaAlocada tarefaAlocada =new TarefaAlocada(pessoa, tarefa);
-		this.listaDeTarefasAlocadas.add(tarefaAlocada);
-		
-	}
+    public ArrayList<TarefaAlocada> getListaDeTarefasAlocadas() {
+        return listaDeTarefasAlocadas;
+    }
 
-	public JComboBox<String> retornarListaTarefas() {
-		JComboBox<String> lista = new JComboBox<String>();	
-		if(this.listaDeTarefas.size()>0) {	
-			for(Tarefa t : listaDeTarefas) {			
-				lista.addItem(t.getNome());
-			}
-		}else {
-			return null;
-		}
-		return lista;	
-	}
+    public void setListaDeTarefasAlocadas(ArrayList<TarefaAlocada> listaDeTarefasAlocadas) {
+        this.listaDeTarefasAlocadas = listaDeTarefasAlocadas;
+    }
 
-	public JComboBox<String> retornarListaPessoas() {
-		JComboBox<String> lista = new JComboBox<String>();	
-		if(this.listaDePessoas.size()>0) {
-			for(Pessoa p : this.listaDePessoas) {	
-				lista.addItem(p.getNome());
-			}
-		}else {
-			return null;
-		}
-		return lista;	
-	}
+    public int getStatus() {
+        return status;
+    }
 
-	public Tarefa retornarTarefa(int posicaoTarefa) {
-		return this.listaDeTarefas.get(posicaoTarefa);
-	}
-	
-	public Pessoa retornarPessoa(int posicaoPessoa) {
-		return this.listaDePessoas.get(posicaoPessoa);
-	}
-	
-	
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public void adicionarRecurso(Recurso recurso) {
+        this.listaDeRecursos.add(recurso);
+    }
+
+    public void adicionarPessoa(Pessoa pessoa) {
+        this.listaDePessoas.add(pessoa);
+    }
+
+    public void adicionarTarefa(Tarefa tarefa) {
+        this.listaDeTarefas.add(tarefa);
+    }
+
+
+    public void alocarTarefa(Pessoa pessoa, Tarefa tarefa) {
+        TarefaAlocada tarefaAlocada = new TarefaAlocada(pessoa, tarefa);
+        this.listaDeTarefasAlocadas.add(tarefaAlocada);
+
+    }
+
+    public JComboBox<String> retornarListaTarefas() {
+        JComboBox<String> lista = new JComboBox<String>();
+        if (this.listaDeTarefas.size() > 0) {
+            for (Tarefa t : listaDeTarefas) {
+                lista.addItem(t.getNome());
+            }
+        } else {
+            return null;
+        }
+        return lista;
+    }
+
+    public JComboBox<String> retornarListaPessoas() {
+        JComboBox<String> lista = new JComboBox<String>();
+        if (this.listaDePessoas.size() > 0) {
+            for (Pessoa p : this.listaDePessoas) {
+                lista.addItem(p.getNome());
+            }
+        } else {
+            return null;
+        }
+        return lista;
+    }
+
+    public Tarefa retornarTarefa(int posicaoTarefa) {
+        return this.listaDeTarefas.get(posicaoTarefa);
+    }
+
+    public Pessoa retornarPessoa(int posicaoPessoa) {
+        return this.listaDePessoas.get(posicaoPessoa);
+    }
+
 
 }
