@@ -19,7 +19,7 @@ public class RelatorioGeral extends Relatorio {
 
     public String gerarRelatorioDadosGerais(Projeto projeto) {
         String dados = String.format(
-            "Dados do projeto: %s\nData inicial: %s\nCliente: %s\nStatus do projeto: %d",
+            "Dados do projeto: %s\nData inicial: %s\nData final: %s\nCliente: %s\nStatus do projeto: %d",
             projeto.getTitulo(),
             projeto.getDataInicial(),
             projeto.getDataFinal(),
