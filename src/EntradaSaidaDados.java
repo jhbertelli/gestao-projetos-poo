@@ -1,4 +1,4 @@
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,13 +61,18 @@ public class EntradaSaidaDados {
     }
 
     public static int escolherTarefa(JComboBox<String> listaDeTarefas) {
-        showMessageDialog(null, listaDeTarefas);
+        showMessageDialog(null, listaDeTarefas, "lista de tarefas", INFORMATION_MESSAGE, null);
         return listaDeTarefas.getSelectedIndex();
     }
 
     public static int escolherPessoa(JComboBox<String> listaDePessoas) {
-        showMessageDialog(null, listaDePessoas);
+        showMessageDialog(null, listaDePessoas, "Escolher pessoa", INFORMATION_MESSAGE, null);
         return listaDePessoas.getSelectedIndex();
+    }
+
+    public static int escolherSolicitante(JComboBox<String> solicitante) {
+        showMessageDialog(null, solicitante, "Escolher solicitante", INFORMATION_MESSAGE, null);
+        return solicitante.getSelectedIndex();
     }
 
     public static void mostrarMensagem(String mensagem) {
@@ -76,7 +81,7 @@ public class EntradaSaidaDados {
     }
 
     public static void mostrarRelatorio(String dadosRelatorio) {
-        showMessageDialog(null, "Relatório\n" + dadosRelatorio);
+        showMessageDialog(null, "Relatório\n" + dadosRelatorio, "Dados do relatório", INFORMATION_MESSAGE, null);
     }
 
 

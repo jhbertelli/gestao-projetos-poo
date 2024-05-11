@@ -114,7 +114,7 @@ public class Projeto {
 
 
     public void alocarTarefa(Pessoa pessoa, Tarefa tarefa) {
-        TarefaAlocada tarefaAlocada = new TarefaAlocada(pessoa, tarefa);
+        TarefaAlocada tarefaAlocada = new TarefaAlocada(pessoa, tarefa, pessoa);
         this.listaDeTarefasAlocadas.add(tarefaAlocada);
 
     }

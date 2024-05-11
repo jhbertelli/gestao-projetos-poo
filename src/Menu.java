@@ -14,7 +14,7 @@ public class Menu {
         JComboBox opcoes = new JComboBox(lista);
 
         do {
-            JOptionPane.showMessageDialog(null, opcoes);
+            JOptionPane.showMessageDialog(null, opcoes, "Opções", JOptionPane.INFORMATION_MESSAGE, null);
             resposta = opcoes.getSelectedIndex();
 
             switch (resposta) { //Adicionando um novo projeto à lista de projetos da classe GestaoProjetos
@@ -53,15 +53,17 @@ public class Menu {
             int posicaoSolicitante = EntradaSaidaDados.escolherPessoa(projetoEscolhido.retornarListaPessoas());
             Pessoa solicitante = projetoEscolhido.retornarPessoa(posicaoSolicitante);
 
+            int pessoaSolicitante = EntradaSaidaDados.escolherSolicitante(projetoEscolhido.retornarListaPessoas());
+
             String data = LocalDate.now().toString();
             RelatorioGeral relatorio = new RelatorioGeral(data, solicitante);
 
             switch (tipo) {
                 case 1:
-                    EntradaSaidaDados.mostrarRelatorio(relatorio.gerarRelatorioDadosGerais(projetoEscolhido));
+                    EntradaSaidaDados.mostrarRelatorio(relatorio.gerarRelatorioDadosGerais(projetoEscolhido, solicitante));
                     break;
                 case 2:
-                    EntradaSaidaDados.mostrarRelatorio(relatorio.gerarRelatorioDeTarefasAlocadas(projetoEscolhido));
+                    EntradaSaidaDados.mostrarRelatorio(relatorio.gerarRelatorioDeTarefasAlocadas(projetoEscolhido, solicitante));
                     break;
             }
         } else {

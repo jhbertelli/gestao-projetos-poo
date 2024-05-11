@@ -19,7 +19,7 @@ public class TarefaAlocada {
         this.tarefa = tarefa;
     }
 
-    TarefaAlocada(Pessoa pessoa, Tarefa tarefa) {
+    TarefaAlocada(Pessoa pessoa, Tarefa tarefa, Pessoa pessoaSolicitante) {
         this.pessoa = pessoa;
         this.tarefa = tarefa;
     }

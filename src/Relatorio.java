@@ -5,9 +5,9 @@ public abstract class Relatorio {
     protected String dataSolicitacao;
     protected Pessoa solicitante;
 
-    Relatorio(String dataSolicitacao, Pessoa pessoa) {
+    Relatorio(String dataSolicitacao, Pessoa pessoaSolicitante) {
         this.dataSolicitacao = dataSolicitacao;
-        this.solicitante = pessoa;
+        this.solicitante = pessoaSolicitante;
     }
 
     public String getDataSolicitacao() {
@@ -17,5 +17,7 @@ public abstract class Relatorio {
     public Pessoa getSolicitante() {
         return solicitante;
     }
+
+
 
 }
