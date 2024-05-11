@@ -148,7 +148,16 @@ public class Menu {
         String cliente = EntradaSaidaDados.retornarTexto("Informe o cliente do projeto");
         String dataInicial = EntradaSaidaDados.retornarTexto("Informe a data inicial do projeto");
         String dataFinal = EntradaSaidaDados.retornarTexto("Informe a data final do projeto");
-        Projeto p = new Projeto(titulo, cliente, dataInicial, dataFinal);
+
+        String[] lista = { "1 - Baixa", "2 - Média", "3 - Alta" };
+        JComboBox opcoes = new JComboBox(lista);
+        // TODO: adicionar uma mensagem de "Escolha a prioridade"
+        JOptionPane.showMessageDialog(null, opcoes);
+        int prioridadeSelecionada = opcoes.getSelectedIndex();
+        // converte a prioridade para o enum
+        Prioridade prioridade = Prioridade.values()[prioridadeSelecionada];
+
+        Projeto p = new Projeto(titulo, cliente, dataInicial, dataFinal, prioridade);
         GestaoProjetos.adicionarProjeto(p);
     }
 
