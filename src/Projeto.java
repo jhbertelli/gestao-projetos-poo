@@ -12,20 +12,18 @@ public class Projeto {
     private ArrayList<Pessoa> listaDePessoas = new ArrayList<Pessoa>();
     private Date dataInicial;
     private Date dataFinal;
-    private Prioridade prioridade;
     private ArrayList<Tarefa> listaDeTarefas = new ArrayList<Tarefa>();
     private ArrayList<TarefaAlocada> listaDeTarefasAlocadas = new ArrayList<TarefaAlocada>();
     private StatusProjeto status;
 
     //Não é necessário representar no diagrama os getters and setters
 
-    Projeto(String titulo, String cliente, Date dataInicial, Date dataFinal, Prioridade prioridade) {
+    Projeto(String titulo, String cliente, Date dataInicial, Date dataFinal) {
         this.titulo = titulo;
         this.cliente = cliente;
         this.dataInicial = dataInicial;
         this.dataFinal = dataFinal;
-        this.prioridade = prioridade;
-        this.status = StatusProjeto.EmAberto;
+        this.status = StatusProjeto.EmAndamento;
     }
 
     public String getTitulo() {

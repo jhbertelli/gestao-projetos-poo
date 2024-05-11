@@ -84,5 +84,14 @@ public class EntradaSaidaDados {
         showMessageDialog(null, "Relatório\n" + dadosRelatorio, "Dados do relatório", INFORMATION_MESSAGE, null);
     }
 
+    public static Prioridade escolherPrioridade() {
+        String[] lista = { "1 - Baixa", "2 - Média", "3 - Alta" };
+        JComboBox opcoes = new JComboBox(lista);
+        // TODO: adicionar uma mensagem de "Escolha a prioridade"
+        JOptionPane.showMessageDialog(null, opcoes);
 
+        int prioridadeSelecionada = opcoes.getSelectedIndex();
+        // converte a prioridade para o enum
+        return Prioridade.values()[prioridadeSelecionada];
+    }
 }

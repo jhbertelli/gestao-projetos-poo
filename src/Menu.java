@@ -50,6 +50,15 @@ public class Menu {
 
             Projeto projetoEscolhido = GestaoProjetos.retornarProjeto(posicaoProjeto);
 
+            if (projetoEscolhido.retornarListaPessoas() == null) {
+                EntradaSaidaDados.mostrarMensagem(
+                    "Nenhuma pessoa encontrada no projeto selecionado.\n" +
+                    "Adicione uma pessoa no projeto para poder gerar relatórios."
+                );
+
+                return;
+            }
+
             int posicaoSolicitante = EntradaSaidaDados.escolherPessoa(projetoEscolhido.retornarListaPessoas());
             Pessoa solicitante = projetoEscolhido.retornarPessoa(posicaoSolicitante);
 
@@ -138,7 +147,7 @@ public class Menu {
         } else {
             String nome = EntradaSaidaDados.retornarTexto("Informe o nome da tarefa");
             String prazo = EntradaSaidaDados.retornarTexto("Informe o prazo da tarefa");
-            int prioridade = EntradaSaidaDados.retornarInteiro("Informe a prioridade da tarefa");
+            var prioridade = EntradaSaidaDados.escolherPrioridade();
             Tarefa t = new Tarefa(nome, prazo, prioridade);
             int posicaoProjeto = EntradaSaidaDados.escolherProjeto(GestaoProjetos.retornarListaProjetos());
             Projeto projetoEscolhido = GestaoProjetos.retornarProjeto(posicaoProjeto);
@@ -152,15 +161,7 @@ public class Menu {
         var dataInicial = EntradaSaidaDados.retornarData("Informe a data inicial do projeto");
         var dataFinal = EntradaSaidaDados.retornarData("Informe a data final do projeto");
 
-        String[] lista = { "1 - Baixa", "2 - Média", "3 - Alta" };
-        JComboBox opcoes = new JComboBox(lista);
-        // TODO: adicionar uma mensagem de "Escolha a prioridade"
-        JOptionPane.showMessageDialog(null, opcoes);
-        int prioridadeSelecionada = opcoes.getSelectedIndex();
-        // converte a prioridade para o enum
-        Prioridade prioridade = Prioridade.values()[prioridadeSelecionada];
-
-        Projeto p = new Projeto(titulo, cliente, dataInicial, dataFinal, prioridade);
+        Projeto p = new Projeto(titulo, cliente, dataInicial, dataFinal);
         GestaoProjetos.adicionarProjeto(p);
     }
 

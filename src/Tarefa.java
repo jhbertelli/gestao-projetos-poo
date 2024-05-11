@@ -4,8 +4,8 @@ public class Tarefa {
 
     private String nome;
     private String prazo;
-    private int prioridade;
-    private int status;
+    private Prioridade prioridade;
+    private StatusTarefa status;
 
     public String getNome() {
         return nome;
@@ -15,18 +15,19 @@ public class Tarefa {
         return prazo;
     }
 
-    public int getPrioridade() {
+    public Prioridade getPrioridade() {
         return prioridade;
     }
 
-    public int getStatus() {
+    public StatusTarefa getStatus() {
         return status;
     }
 
-    Tarefa(String nome, String prazo, int prioridade) {
+    Tarefa(String nome, String prazo, Prioridade prioridade) {
         this.nome = nome;
         this.prazo = prazo;
         this.prioridade = prioridade;
+        this.status = StatusTarefa.EmAberto;
     }
 
 }
