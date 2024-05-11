@@ -1,6 +1,6 @@
 import java.awt.Component;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JComboBox;
 
@@ -10,8 +10,8 @@ public class Projeto {
     private String cliente;
     private ArrayList<Recurso> listaDeRecursos = new ArrayList<Recurso>();
     private ArrayList<Pessoa> listaDePessoas = new ArrayList<Pessoa>();
-    private String dataInicial;
-    private String dataFinal;
+    private Date dataInicial;
+    private Date dataFinal;
     private Prioridade prioridade;
     private ArrayList<Tarefa> listaDeTarefas = new ArrayList<Tarefa>();
     private ArrayList<TarefaAlocada> listaDeTarefasAlocadas = new ArrayList<TarefaAlocada>();
@@ -19,7 +19,7 @@ public class Projeto {
 
     //Não é necessário representar no diagrama os getters and setters
 
-    Projeto(String titulo, String cliente, String dataInicial, String dataFinal, Prioridade prioridade) {
+    Projeto(String titulo, String cliente, Date dataInicial, Date dataFinal, Prioridade prioridade) {
         this.titulo = titulo;
         this.cliente = cliente;
         this.dataInicial = dataInicial;
@@ -60,19 +60,19 @@ public class Projeto {
         this.listaDePessoas = listaDePessoas;
     }
 
-    public String getDataInicial() {
+    public Date getDataInicial() {
         return dataInicial;
     }
 
-    public void setDataInicial(String dataInicial) {
+    public void setDataInicial(Date dataInicial) {
         this.dataInicial = dataInicial;
     }
 
-    public String getDataFinal() {
+    public Date getDataFinal() {
         return dataFinal;
     }
 
-    public void setDataFinal(String dataFinal) {
+    public void setDataFinal(Date dataFinal) {
         this.dataFinal = dataFinal;
     }
 
@@ -121,7 +121,7 @@ public class Projeto {
 
     public JComboBox<String> retornarListaTarefas() {
         JComboBox<String> lista = new JComboBox<String>();
-        if (this.listaDeTarefas.size() > 0) {
+        if (!this.listaDeTarefas.isEmpty()) {
             for (Tarefa t : listaDeTarefas) {
                 lista.addItem(t.getNome());
             }

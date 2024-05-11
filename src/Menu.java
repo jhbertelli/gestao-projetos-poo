@@ -1,9 +1,10 @@
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Calendar;
 
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 public class Menu {
     public static void exibirMenu() {
@@ -146,8 +147,8 @@ public class Menu {
     private static void criarProjeto() {
         String titulo = EntradaSaidaDados.retornarTexto("Informe o título do projeto");
         String cliente = EntradaSaidaDados.retornarTexto("Informe o cliente do projeto");
-        String dataInicial = EntradaSaidaDados.retornarTexto("Informe a data inicial do projeto");
-        String dataFinal = EntradaSaidaDados.retornarTexto("Informe a data final do projeto");
+        var dataInicial = EntradaSaidaDados.retornarData("Informe a data inicial do projeto");
+        var dataFinal = EntradaSaidaDados.retornarData("Informe a data final do projeto");
 
         String[] lista = { "1 - Baixa", "2 - Média", "3 - Alta" };
         JComboBox opcoes = new JComboBox(lista);
@@ -165,3 +166,4 @@ public class Menu {
         return GestaoProjetos.retornarListaProjetos().getItemCount() > 0;
     }
 }
+
