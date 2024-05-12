@@ -122,6 +122,8 @@ public class Menu {
                 pessoaEscolhida = projetoEscolhido.retornarPessoa(posicaoPessoa);
             }
             projetoEscolhido.alocarTarefa(pessoaEscolhida, tarefaEscolhida);
+            String pessoaCargo = "Pessoa alocada: " + pessoaEscolhida.getNome() + "\nCargo da pessoa alocada: " + pessoaEscolhida.getCargo().getNome();
+            EntradaSaidaDados.mostrarMensagem(pessoaCargo);
         }
     }
 
