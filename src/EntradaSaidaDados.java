@@ -1,7 +1,8 @@
 import javax.swing.*;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.awt.*;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -22,7 +23,7 @@ public class EntradaSaidaDados {
         Date date = new Date();
         var formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT);
 
-        boolean retry = false;
+        boolean retry;
 
         do {
             String input = showInputDialog(mensagem);
@@ -33,7 +34,6 @@ public class EntradaSaidaDados {
                 // converte de LocalDate para date
                 date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
                 retry = false;
-                System.out.println(date);
             }
             catch (DateTimeParseException ex) {
                 retry = true;
@@ -85,13 +85,21 @@ public class EntradaSaidaDados {
     }
 
     public static Prioridade escolherPrioridade() {
+        JPanel panel = new JPanel(new GridLayout(1, 2));
+
+        panel.add(new JLabel("Escolha a prioridade da tarefa: "));
         String[] lista = { "1 - Baixa", "2 - Média", "3 - Alta" };
         JComboBox opcoes = new JComboBox(lista);
-        // TODO: adicionar uma mensagem de "Escolha a prioridade"
-        JOptionPane.showMessageDialog(null, opcoes);
+        panel.add(opcoes);
 
-        int prioridadeSelecionada = opcoes.getSelectedIndex();
-        // converte a prioridade para o enum
-        return Prioridade.values()[prioridadeSelecionada];
+        int result = JOptionPane.showConfirmDialog(null, panel, "Cadastro", JOptionPane.OK_CANCEL_OPTION);
+
+        if (result == JOptionPane.OK_OPTION) {
+            int prioridadeSelecionada = opcoes.getSelectedIndex();
+            // converte a prioridade para o enum
+            return Prioridade.values()[prioridadeSelecionada];
+        } else {
+            return null;
+        }
     }
 }

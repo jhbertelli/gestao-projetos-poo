@@ -1,10 +1,7 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.awt.*;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Calendar;
-
 import javax.swing.*;
+import javax.swing.JOptionPane;
 
 public class Menu {
     public static void exibirMenu() {
@@ -44,7 +41,18 @@ public class Menu {
 
     private static void gerarRelatorio() {
         if (getHasProjects()) {
-            int tipo = EntradaSaidaDados.retornarInteiro("Informe o tipo de relatório desejado:" + "\n 1 - Dados gerais do projeto" + "\n 2 - Tarefas alocadas de um projeto");
+            JPanel panel = new JPanel(new GridLayout(1, 2));
+
+            panel.add(new JLabel("Informe o tipo de relatório desejado:"));
+            String[] lista = { "1 - Dados gerais do projeto", "2 - Tarefas alocadas de um projeto" };
+            JComboBox opcoes = new JComboBox(lista);
+            panel.add(opcoes);
+
+            int result = JOptionPane.showConfirmDialog(null, panel, "Cadastro", JOptionPane.OK_CANCEL_OPTION);
+
+            if (result != JOptionPane.OK_OPTION) return;
+
+            int tipo = opcoes.getSelectedIndex();
 
             int posicaoProjeto = EntradaSaidaDados.escolherProjeto(GestaoProjetos.retornarListaProjetos());
 
@@ -68,10 +76,10 @@ public class Menu {
             RelatorioGeral relatorio = new RelatorioGeral(data, solicitante);
 
             switch (tipo) {
-                case 1:
+                case 0:
                     EntradaSaidaDados.mostrarRelatorio(relatorio.gerarRelatorioDadosGerais(projetoEscolhido, solicitante));
                     break;
-                case 2:
+                case 1:
                     EntradaSaidaDados.mostrarRelatorio(relatorio.gerarRelatorioDeTarefasAlocadas(projetoEscolhido, solicitante));
                     break;
             }
