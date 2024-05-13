@@ -6,9 +6,19 @@ import javax.swing.JOptionPane;
 
 public class Menu {
     public static void exibirMenu() {
-
         int resposta;
-        String[] lista = {"Criar projeto", "Adicionar tarefa", "Adicionar pessoa ao projeto", "Alocar tarefa", "Alocar recurso", "Gerar relatório", "Sair"};
+
+        String[] lista = {
+            "Criar projeto",
+            "Adicionar tarefa",
+            "Adicionar pessoa ao projeto",
+            "Alocar tarefa",
+            "Alocar recurso",
+            "Gerar relatório",
+            "Alterar prioridade de uma tarefa",
+            "Sair"
+        };
+
         JComboBox opcoes = new JComboBox(lista);
 
         do {
@@ -33,9 +43,12 @@ public class Menu {
                     break;
                 case 5:
                     gerarRelatorio();
+                    break;
+                case 6:
+                    alterarPrioridadeTarefa();
             }
 
-        } while (resposta != 6);
+        } while (resposta != 7);
 
 
     }
@@ -118,6 +131,7 @@ public class Menu {
             if (projetoEscolhido.retornarListaTarefas() == null) {
                 EntradaSaidaDados.mostrarMensagem("Adicione tarefas ao projeto");
                 adicionarTarefa();
+                tarefaEscolhida = projetoEscolhido.retornarTarefa(0);
             } else {
                 int posicaoTarefa = EntradaSaidaDados.escolherTarefa(projetoEscolhido.retornarListaTarefas());
                 tarefaEscolhida = projetoEscolhido.retornarTarefa(posicaoTarefa);
@@ -131,6 +145,7 @@ public class Menu {
                 int posicaoPessoa = EntradaSaidaDados.escolherPessoa(projetoEscolhido.retornarListaPessoas());
                 pessoaEscolhida = projetoEscolhido.retornarPessoa(posicaoPessoa);
             }
+
             projetoEscolhido.alocarTarefa(pessoaEscolhida, tarefaEscolhida);
             String pessoaCargo = "Pessoa alocada: " + pessoaEscolhida.getNome() + "\nCargo da pessoa alocada: " + pessoaEscolhida.getCargo().getNome();
             EntradaSaidaDados.mostrarMensagem(pessoaCargo);
@@ -167,6 +182,48 @@ public class Menu {
         }
     }
 
+    private static void alterarPrioridadeTarefa() {
+        if (!getHasProjects()) {
+            EntradaSaidaDados.mostrarMensagem(
+                "Nenhum projeto encontrado. Adicione um projeto para poder alterar suas tarefas."
+            );
+        } else {
+            var projeto = selecionarProjeto();
+            var listaTarefas = projeto.retornarListaTarefas();
+
+            if (listaTarefas == null) {
+                EntradaSaidaDados.mostrarMensagem(
+                    "Nenhuma tarefa encontrada neste projeto. Adicione tarefas para poder alterá-las."
+                );
+
+                return;
+            }
+
+            int posicaoTarefa = EntradaSaidaDados.escolherTarefa(listaTarefas);
+            var tarefa = projeto.retornarTarefa(posicaoTarefa);
+
+            String prioridadeAntiga = tarefa.getPrioridade().toString();
+            EntradaSaidaDados.mostrarMensagem("Prioridade atual da tarefa escolhida: " + prioridadeAntiga);
+
+            var prioridadeNova = EntradaSaidaDados.escolherPrioridade();
+
+            if (prioridadeNova == null) {
+                EntradaSaidaDados.mostrarMensagem("Operação cancelada.");
+                return;
+            }
+
+            tarefa.setPrioridade(prioridadeNova);
+
+            EntradaSaidaDados.mostrarMensagem(
+                String.format(
+                    "Prioridade alterada com sucesso de: %s para %s.",
+                    prioridadeAntiga,
+                    prioridadeNova
+                )
+            );
+        }
+    }
+
     private static void criarProjeto() {
         String titulo = EntradaSaidaDados.retornarTexto("Informe o título do projeto");
         String cliente = EntradaSaidaDados.retornarTexto("Informe o cliente do projeto");
@@ -179,6 +236,11 @@ public class Menu {
 
     private static boolean getHasProjects() {
         return GestaoProjetos.retornarListaProjetos().getItemCount() > 0;
+    }
+
+    private static Projeto selecionarProjeto() {
+        int posicaoProjeto = EntradaSaidaDados.escolherProjeto(GestaoProjetos.retornarListaProjetos());
+        return GestaoProjetos.retornarProjeto(posicaoProjeto);
     }
 }
 

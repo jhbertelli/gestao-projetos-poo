@@ -23,6 +23,10 @@ public class Tarefa {
         return status;
     }
 
+    public void setPrioridade(Prioridade prioridade) {
+        this.prioridade = prioridade;
+    }
+
     Tarefa(String nome, Date prazo, Prioridade prioridade) {
         this.nome = nome;
         this.prazo = prazo;
