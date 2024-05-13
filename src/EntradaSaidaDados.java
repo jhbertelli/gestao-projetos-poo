@@ -102,4 +102,24 @@ public class EntradaSaidaDados {
             return null;
         }
     }
+
+    // todo: unificar funções
+    public static StatusTarefa escolherStatusTarefa() {
+        JPanel panel = new JPanel(new GridLayout(1, 2));
+
+        panel.add(new JLabel("Escolha o status da tarefa: "));
+        String[] lista = { "1 - Em Aberto", "2 - Encerrada" };
+        JComboBox opcoes = new JComboBox(lista);
+        panel.add(opcoes);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Cadastro", JOptionPane.OK_CANCEL_OPTION);
+
+        if (result == JOptionPane.OK_OPTION) {
+            int prioridadeSelecionada = opcoes.getSelectedIndex();
+            // converte a prioridade para o enum
+            return StatusTarefa.values()[prioridadeSelecionada];
+        } else {
+            return null;
+        }
+    }
 }

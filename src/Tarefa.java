@@ -23,8 +23,8 @@ public class Tarefa {
         return status;
     }
 
-    public void setPrioridade(Prioridade prioridade) {
-        this.prioridade = prioridade;
+    public void setStatus(StatusTarefa status) {
+        this.status = status;
     }
 
     Tarefa(String nome, Date prazo, Prioridade prioridade) {

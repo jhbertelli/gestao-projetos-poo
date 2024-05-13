@@ -15,7 +15,7 @@ public class Menu {
             "Alocar tarefa",
             "Alocar recurso",
             "Gerar relatório",
-            "Alterar prioridade de uma tarefa",
+            "Alterar status de uma tarefa",
             "Sair"
         };
 
@@ -45,7 +45,7 @@ public class Menu {
                     gerarRelatorio();
                     break;
                 case 6:
-                    alterarPrioridadeTarefa();
+                    alterarStatusTarefa();
             }
 
         } while (resposta != 7);
@@ -182,7 +182,7 @@ public class Menu {
         }
     }
 
-    private static void alterarPrioridadeTarefa() {
+    private static void alterarStatusTarefa() {
         if (!getHasProjects()) {
             EntradaSaidaDados.mostrarMensagem(
                 "Nenhum projeto encontrado. Adicione um projeto para poder alterar suas tarefas."
@@ -202,23 +202,23 @@ public class Menu {
             int posicaoTarefa = EntradaSaidaDados.escolherTarefa(listaTarefas);
             var tarefa = projeto.retornarTarefa(posicaoTarefa);
 
-            String prioridadeAntiga = tarefa.getPrioridade().toString();
-            EntradaSaidaDados.mostrarMensagem("Prioridade atual da tarefa escolhida: " + prioridadeAntiga);
+            String statusAntigo = tarefa.getStatus().toString();
+            EntradaSaidaDados.mostrarMensagem("Status atual da tarefa escolhida: " + statusAntigo);
 
-            var prioridadeNova = EntradaSaidaDados.escolherPrioridade();
+            var statusNovo = EntradaSaidaDados.escolherStatusTarefa();
 
-            if (prioridadeNova == null) {
+            if (statusNovo == null) {
                 EntradaSaidaDados.mostrarMensagem("Operação cancelada.");
                 return;
             }
 
-            tarefa.setPrioridade(prioridadeNova);
+            tarefa.setStatus(statusNovo);
 
             EntradaSaidaDados.mostrarMensagem(
                 String.format(
-                    "Prioridade alterada com sucesso de: %s para %s.",
-                    prioridadeAntiga,
-                    prioridadeNova
+                    "Status alterado com sucesso de: %s para %s.",
+                    statusAntigo,
+                    statusNovo
                 )
             );
         }
