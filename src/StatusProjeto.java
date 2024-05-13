@@ -2,7 +2,7 @@ public enum StatusProjeto {
     EmAndamento("Em Andamento"),
     Finalizado("Finalizado");
 
-    private String displayName;
+    private final String displayName;
 
     StatusProjeto(String displayName) {
         this.displayName = displayName;
