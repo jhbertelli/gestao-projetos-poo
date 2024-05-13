@@ -81,10 +81,8 @@ public class Menu {
                 return;
             }
 
-            int posicaoSolicitante = EntradaSaidaDados.escolherPessoa(projetoEscolhido.retornarListaPessoas());
+            int posicaoSolicitante = EntradaSaidaDados.escolherSolicitante(projetoEscolhido.retornarListaPessoas());
             Pessoa solicitante = projetoEscolhido.retornarPessoa(posicaoSolicitante);
-
-            int pessoaSolicitante = EntradaSaidaDados.escolherSolicitante(projetoEscolhido.retornarListaPessoas());
 
             String data = LocalDate.now().toString();
             RelatorioGeral relatorio = new RelatorioGeral(data, solicitante);

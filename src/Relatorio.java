@@ -1,5 +1,3 @@
-import java.sql.Date;
-
 public abstract class Relatorio {
 
     protected String dataSolicitacao;
