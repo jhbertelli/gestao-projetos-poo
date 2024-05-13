@@ -92,7 +92,7 @@ public class EntradaSaidaDados {
         JComboBox opcoes = new JComboBox(lista);
         panel.add(opcoes);
 
-        int result = JOptionPane.showConfirmDialog(null, panel, "Cadastro", JOptionPane.OK_CANCEL_OPTION);
+        int result = JOptionPane.showConfirmDialog(null, panel, "Prioridade", JOptionPane.OK_CANCEL_OPTION);
 
         if (result == JOptionPane.OK_OPTION) {
             int prioridadeSelecionada = opcoes.getSelectedIndex();
@@ -112,12 +112,32 @@ public class EntradaSaidaDados {
         JComboBox opcoes = new JComboBox(lista);
         panel.add(opcoes);
 
-        int result = JOptionPane.showConfirmDialog(null, panel, "Cadastro", JOptionPane.OK_CANCEL_OPTION);
+        int result = JOptionPane.showConfirmDialog(null, panel, "Status da tarefa", JOptionPane.OK_CANCEL_OPTION);
 
         if (result == JOptionPane.OK_OPTION) {
             int prioridadeSelecionada = opcoes.getSelectedIndex();
             // converte a prioridade para o enum
             return StatusTarefa.values()[prioridadeSelecionada];
+        } else {
+            return null;
+        }
+    }
+
+    // todo: unificar funções
+    public static StatusProjeto escolherStatusProjeto() {
+        JPanel panel = new JPanel(new GridLayout(1, 2));
+
+        panel.add(new JLabel("Escolha o status do projeto: "));
+        String[] lista = { "1 - Em Andamento", "2 - Finalizado" };
+        JComboBox opcoes = new JComboBox(lista);
+        panel.add(opcoes);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Status do projeto", JOptionPane.OK_CANCEL_OPTION);
+
+        if (result == JOptionPane.OK_OPTION) {
+            int prioridadeSelecionada = opcoes.getSelectedIndex();
+            // converte a prioridade para o enum
+            return StatusProjeto.values()[prioridadeSelecionada];
         } else {
             return null;
         }
