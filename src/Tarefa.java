@@ -1,9 +1,9 @@
-import java.sql.Date;
+import java.util.Date;
 
 public class Tarefa {
 
     private String nome;
-    private String prazo;
+    private Date prazo;
     private Prioridade prioridade;
     private StatusTarefa status;
 
@@ -11,7 +11,7 @@ public class Tarefa {
         return nome;
     }
 
-    public String getPrazo() {
+    public Date getPrazo() {
         return prazo;
     }
 
@@ -23,7 +23,7 @@ public class Tarefa {
         return status;
     }
 
-    Tarefa(String nome, String prazo, Prioridade prioridade) {
+    Tarefa(String nome, Date prazo, Prioridade prioridade) {
         this.nome = nome;
         this.prazo = prazo;
         this.prioridade = prioridade;

@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.Date;
 import javax.swing.*;
 import javax.swing.JOptionPane;
 
@@ -125,6 +126,7 @@ public class Menu {
             if (projetoEscolhido.retornarListaPessoas() == null) {
                 EntradaSaidaDados.mostrarMensagem("Adicione pessoas ao projeto");
                 adicionarPessoa();
+                pessoaEscolhida = projetoEscolhido.retornarPessoa(0);
             } else {
                 int posicaoPessoa = EntradaSaidaDados.escolherPessoa(projetoEscolhido.retornarListaPessoas());
                 pessoaEscolhida = projetoEscolhido.retornarPessoa(posicaoPessoa);
@@ -156,7 +158,7 @@ public class Menu {
 //			criarProjeto();
         } else {
             String nome = EntradaSaidaDados.retornarTexto("Informe o nome da tarefa");
-            String prazo = EntradaSaidaDados.retornarTexto("Informe o prazo da tarefa");
+            Date prazo = EntradaSaidaDados.retornarData("Informe o prazo da tarefa");
             var prioridade = EntradaSaidaDados.escolherPrioridade();
             Tarefa t = new Tarefa(nome, prazo, prioridade);
             int posicaoProjeto = EntradaSaidaDados.escolherProjeto(GestaoProjetos.retornarListaProjetos());
