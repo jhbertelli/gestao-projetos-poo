@@ -142,7 +142,7 @@ public class Menu {
         Projeto projetoEscolhido = GestaoProjetos.retornarProjeto(posicaoProjeto);
         if (projetoEscolhido.retornarListaTarefas() == null) {
             EntradaSaidaDados.mostrarMensagem("Adicione tarefas ao projeto");
-            adicionarTarefa();
+            adicionarTarefa(projetoEscolhido);
             tarefaEscolhida = projetoEscolhido.retornarTarefa(0);
         } else {
             int posicaoTarefa = EntradaSaidaDados.escolherTarefa(projetoEscolhido.retornarListaTarefas());
@@ -151,7 +151,7 @@ public class Menu {
 
         if (projetoEscolhido.retornarListaPessoas() == null) {
             EntradaSaidaDados.mostrarMensagem("Adicione pessoas ao projeto");
-            adicionarPessoa();
+            adicionarPessoa(projetoEscolhido);
             pessoaEscolhida = projetoEscolhido.retornarPessoa(0);
         } else {
             int posicaoPessoa = EntradaSaidaDados.escolherPessoa(projetoEscolhido.retornarListaPessoas());
@@ -179,6 +179,14 @@ public class Menu {
         projetoEscolhido.adicionarPessoa(p);
     }
 
+    private static void adicionarPessoa(Projeto projeto) {
+        String nome = EntradaSaidaDados.retornarTexto("Informe o nome da pessoa");
+        String sobrenome = EntradaSaidaDados.retornarTexto("Informe o sobrenome da pessoa");
+        Cargo cargo = new Cargo(EntradaSaidaDados.retornarTexto("Informe o cargo da pessoa no projeto"));
+        Pessoa p = new Pessoa(nome, sobrenome, cargo);
+        projeto.adicionarPessoa(p);
+    }
+
     private static void adicionarTarefa() {
         if (!getHasProjects()) {
             EntradaSaidaDados.mostrarMensagem("Nenhum projeto encontrado. Adicione um projeto para poder adicionar uma tarefa nele.");
@@ -193,6 +201,14 @@ public class Menu {
         int posicaoProjeto = EntradaSaidaDados.escolherProjeto(GestaoProjetos.retornarListaProjetos());
         Projeto projetoEscolhido = GestaoProjetos.retornarProjeto(posicaoProjeto);
         projetoEscolhido.adicionarTarefa(t);
+    }
+
+    private static void adicionarTarefa(Projeto projeto) {
+        String nome = EntradaSaidaDados.retornarTexto("Informe o nome da tarefa");
+        Date prazo = EntradaSaidaDados.retornarData("Informe o prazo da tarefa");
+        var prioridade = EntradaSaidaDados.escolherPrioridade();
+        Tarefa t = new Tarefa(nome, prazo, prioridade);
+        projeto.adicionarTarefa(t);
     }
 
     private static void alterarStatusTarefa() {
