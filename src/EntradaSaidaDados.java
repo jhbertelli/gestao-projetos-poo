@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 import java.util.Date;
+import java.util.List;
 
 import static javax.swing.JOptionPane.*;
 
@@ -115,9 +116,9 @@ public class EntradaSaidaDados {
         int result = JOptionPane.showConfirmDialog(null, panel, "Status da tarefa", JOptionPane.OK_CANCEL_OPTION);
 
         if (result == JOptionPane.OK_OPTION) {
-            int prioridadeSelecionada = opcoes.getSelectedIndex();
-            // converte a prioridade para o enum
-            return StatusTarefa.values()[prioridadeSelecionada];
+            int statusSelecionado = opcoes.getSelectedIndex();
+            // converte o status para o enum
+            return StatusTarefa.values()[statusSelecionado];
         } else {
             return null;
         }
@@ -135,9 +136,31 @@ public class EntradaSaidaDados {
         int result = JOptionPane.showConfirmDialog(null, panel, "Status do projeto", JOptionPane.OK_CANCEL_OPTION);
 
         if (result == JOptionPane.OK_OPTION) {
-            int prioridadeSelecionada = opcoes.getSelectedIndex();
+            int statusSelecionado = opcoes.getSelectedIndex();
             // converte a prioridade para o enum
-            return StatusProjeto.values()[prioridadeSelecionada];
+            return StatusProjeto.values()[statusSelecionado];
+        } else {
+            return null;
+        }
+    }
+
+    public static Recurso escolherRecurso(List<Recurso> recursos) {
+        JPanel panel = new JPanel(new GridLayout(1, 2));
+
+        panel.add(new JLabel("Escolha o recurso a remover do projeto: "));
+
+        JComboBox opcoes = new JComboBox();
+
+        for (var recurso : recursos) {
+           opcoes.addItem(recurso.getNome());
+        }
+
+        panel.add(opcoes);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Recurso", JOptionPane.OK_CANCEL_OPTION);
+
+        if (result == JOptionPane.OK_OPTION) {
+            return recursos.get(opcoes.getSelectedIndex());
         } else {
             return null;
         }

@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.JOptionPane;
 
@@ -17,6 +18,7 @@ public class Menu {
             "Gerar relatório",
             "Alterar status de um projeto",
             "Alterar status de uma tarefa",
+            "Remover recurso",
             "Sair"
         };
 
@@ -50,11 +52,13 @@ public class Menu {
                     break;
                 case 7:
                     alterarStatusTarefa();
+                    break;
+                case 8:
+                    removerRecurso();
+                    break;
             }
 
-        } while (resposta != 8);
-
-
+        } while (resposta != 9);
     }
 
     private static void gerarRelatorio() {
@@ -265,6 +269,36 @@ public class Menu {
                 statusNovo
             )
         );
+    }
+
+    private static void removerRecurso() {
+        if (!getHasProjects()) {
+            EntradaSaidaDados.mostrarMensagem(
+                "Nenhum projeto encontrado. Adicione um projeto para poder remover recursos."
+            );
+
+            return;
+        }
+
+        Projeto projeto = selecionarProjeto();
+        List<Recurso> listaRecursos = projeto.getListaDeRecursos();
+
+        if (listaRecursos.isEmpty()) {
+            EntradaSaidaDados.mostrarMensagem(
+                "Nenhum recurso encontrado. Adicione um recurso no projeto selecionado para poder remover recursos."
+            );
+
+            return;
+        }
+
+        Recurso recurso = EntradaSaidaDados.escolherRecurso(listaRecursos);
+
+        if (recurso == null) {
+            EntradaSaidaDados.mostrarMensagem("Operação cancelada.");
+            return;
+        }
+
+        listaRecursos.remove(recurso);
     }
 
     private static void criarProjeto() {
