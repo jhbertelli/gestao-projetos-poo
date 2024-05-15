@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ public class Menu {
             "Alocar tarefa",
             "Alocar recurso",
             "Gerar relatório",
+            "Alterar data final de um projeto",
             "Alterar status de um projeto",
             "Alterar status de uma tarefa",
             "Remover recurso",
@@ -48,21 +50,24 @@ public class Menu {
                     gerarRelatorio();
                     break;
                 case 6:
-                    alterarStatusProjeto();
+                    alterarDataFinalProjeto();
                     break;
                 case 7:
-                    alterarStatusTarefa();
+                    alterarStatusProjeto();
                     break;
                 case 8:
+                    alterarStatusTarefa();
+                    break;
+                case 9:
                     removerRecurso();
                     break;
             }
 
-        } while (resposta != 9);
+        } while (resposta != 10);
     }
 
     private static void gerarRelatorio() {
-        if (!getHasProjects())  {
+        if (!getHasProjects()) {
             EntradaSaidaDados.mostrarMensagem("Nenhum projeto encontrado. Adicione um projeto para poder gerar relatórios.");
             //criarProjeto();
             return;
@@ -345,6 +350,37 @@ public class Menu {
         GestaoProjetos.adicionarProjeto(p);
     }
 
+    private static void alterarDataFinalProjeto() {
+        if (!getHasProjects()) {
+            EntradaSaidaDados.mostrarMensagem(
+                "Nenhum projeto encontrado. Adicione um projeto para poder alterar seu status."
+            );
+
+            return;
+        }
+
+        var projeto = selecionarProjeto();
+
+        Date dataFinalNova = EntradaSaidaDados.retornarData(
+            "Insira a nova data final do projeto.\nData final anterior: " + formatarDataParaString(projeto.getDataFinal())
+        );
+
+        if (dataFinalNova == null) {
+            EntradaSaidaDados.mostrarMensagem("Operação cancelada.");
+            return;
+        }
+
+        projeto.setDataFinal(dataFinalNova);
+
+        EntradaSaidaDados.mostrarMensagem(
+            String.format(
+                "Data alterada com sucesso de: %s para %s.",
+                formatarDataParaString(projeto.getDataFinal()),
+                formatarDataParaString(dataFinalNova)
+            )
+        );
+    }
+
     private static boolean getHasProjects() {
         return GestaoProjetos.retornarListaProjetos().getItemCount() > 0;
     }
@@ -352,6 +388,16 @@ public class Menu {
     private static Projeto selecionarProjeto() {
         int posicaoProjeto = EntradaSaidaDados.escolherProjeto(GestaoProjetos.retornarListaProjetos());
         return GestaoProjetos.retornarProjeto(posicaoProjeto);
+    }
+
+    private static String formatarDataParaString(Date data) {
+        //DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT);
+        var formatadorData = new SimpleDateFormat("dd/MM/yyyy");
+        String dataFormatada = formatadorData.format(data);
+
+        System.out.println(dataFormatada);
+
+        return dataFormatada;
     }
 }
 
