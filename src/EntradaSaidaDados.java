@@ -4,7 +4,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
@@ -29,18 +28,19 @@ public class EntradaSaidaDados {
         do {
             String input = showInputDialog(mensagem);
 
+            if (input == null) return null;
+
             try {
                 var localDate = LocalDate.parse(input, formatter);
 
                 // converte de LocalDate para date
-                date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                date = java.sql.Date.valueOf(localDate);
                 retry = false;
-            }
-            catch (DateTimeParseException ex) {
+            } catch (DateTimeParseException ex) {
                 retry = true;
                 showMessageDialog(
-                    null,
-                    "Você inseriu uma data inválida! Insira uma data válida, no formato: " + DATE_FORMAT
+                        null,
+                        "Você inseriu uma data inválida! Insira uma data válida, no formato: " + DATE_FORMAT
                 );
             }
         } while (retry);
@@ -89,7 +89,7 @@ public class EntradaSaidaDados {
         JPanel panel = new JPanel(new GridLayout(1, 2));
 
         panel.add(new JLabel("Escolha a prioridade da tarefa: "));
-        String[] lista = { "1 - Baixa", "2 - Média", "3 - Alta" };
+        String[] lista = {"1 - Baixa", "2 - Média", "3 - Alta"};
         JComboBox opcoes = new JComboBox(lista);
         panel.add(opcoes);
 
@@ -109,7 +109,7 @@ public class EntradaSaidaDados {
         JPanel panel = new JPanel(new GridLayout(1, 2));
 
         panel.add(new JLabel("Escolha o status da tarefa: "));
-        String[] lista = { "1 - Em Aberto", "2 - Encerrada" };
+        String[] lista = {"1 - Em Aberto", "2 - Encerrada"};
         JComboBox opcoes = new JComboBox(lista);
         panel.add(opcoes);
 
@@ -129,7 +129,7 @@ public class EntradaSaidaDados {
         JPanel panel = new JPanel(new GridLayout(1, 2));
 
         panel.add(new JLabel("Escolha o status do projeto: "));
-        String[] lista = { "1 - Em Andamento", "2 - Finalizado" };
+        String[] lista = {"1 - Em Andamento", "2 - Finalizado"};
         JComboBox opcoes = new JComboBox(lista);
         panel.add(opcoes);
 
@@ -152,7 +152,7 @@ public class EntradaSaidaDados {
         JComboBox opcoes = new JComboBox();
 
         for (var recurso : recursos) {
-           opcoes.addItem(recurso.getNome());
+            opcoes.addItem(recurso.getNome());
         }
 
         panel.add(opcoes);
