@@ -71,7 +71,10 @@ public class Menu {
         JPanel panel = new JPanel(new GridLayout(1, 2));
 
         panel.add(new JLabel("Informe o tipo de relatório desejado:"));
-        String[] lista = { "1 - Dados gerais do projeto", "2 - Tarefas alocadas de um projeto" };
+        String[] lista = { "1 - Dados gerais do projeto", "2 - Tarefas alocadas de um projeto", "2" +
+                "3 - Relatório de todas as tarefas de um projeto",
+                "4 - Relatório de todas as pessoas de um projeto", "4 - Relatório de todos os recursos de um projeto",
+                "6 -  Relatório de todas as tarefas 'ENCERRADAS' de um projeto", "7 - Gerar relatório de todas as tarefas 'EM ANDAMENTO' de um projeto" };
         JComboBox opcoes = new JComboBox(lista);
         panel.add(opcoes);
 
@@ -106,6 +109,21 @@ public class Menu {
                 break;
             case 1:
                 EntradaSaidaDados.mostrarRelatorio(relatorio.gerarRelatorioDeTarefasAlocadas(projetoEscolhido, solicitante));
+                break;
+            case 2:
+                EntradaSaidaDados.mostrarRelatorio(relatorio.gerarRelatorioTodasTarefasProjeto(projetoEscolhido, solicitante));
+                break;
+            case 3:
+                EntradaSaidaDados.mostrarRelatorio(relatorio.gerarRelatorioTodasPessoasProjeto(projetoEscolhido, solicitante));
+                break;
+            case 4:
+                EntradaSaidaDados.mostrarRelatorio(relatorio.gerarRelatorioTodosRecursosProjeto(projetoEscolhido, solicitante));
+                break;
+            case 5:
+                EntradaSaidaDados.mostrarRelatorio(relatorio.gerarRelatorioTodasTarefasFinalizadas(projetoEscolhido, solicitante));
+                break;
+            case 6:
+                EntradaSaidaDados.mostrarRelatorio(relatorio.gerarRelatorioTodasTarefasEmAndamento(projetoEscolhido, solicitante));
                 break;
         }
     }

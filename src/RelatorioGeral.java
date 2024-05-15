@@ -1,3 +1,4 @@
+import java.beans.PropertyEditor;
 import java.util.Date;
 
 public class RelatorioGeral extends Relatorio {
@@ -35,4 +36,69 @@ public class RelatorioGeral extends Relatorio {
 
         return dados;
     }
+
+    public String gerarRelatorioTodasTarefasProjeto(Projeto projeto, Pessoa solicitante) {
+        String dados = "\nPessoa solicitante do relatório: " + solicitante.getNome();
+        dados += "\nData da solicitação do relatório " + new Date().toString();
+        dados += "\nTarefas alocadas do projeto: " + projeto.getTitulo();
+
+        for (TarefaAlocada t : projeto.getListaDeTarefasAlocadas()){
+            dados += "\nNome da tarefa: " + t.getTarefa().getNome() + " Pessoa alocada: " + t.getPessoa().getNome();
+        }
+
+        return dados;
+    }
+
+    public String gerarRelatorioTodasPessoasProjeto(Projeto projeto, Pessoa solicitante) {
+        String dados = "\nPessoa solicitante do relatório: " + solicitante.getNome();
+        dados += "\nData da solicitação do relatório " + new Date().toString();
+        dados += "\nPessoas alocadas ao projeto: " + projeto.getTitulo();
+
+        for (Pessoa p : projeto.getListaDePessoas()){
+            dados += "\n" + p.getNome() + " " + p.getSobrenome();
+        }
+
+        return dados;
+    }
+
+    public String gerarRelatorioTodosRecursosProjeto(Projeto projeto, Pessoa solicitante) {
+        String dados = "\nPessoa solicitante do relatório: " + solicitante.getNome();
+        dados += "\nData da solicitação do relatório " + new Date().toString();
+        dados += "\nRecursos alocados ao projeto: " + projeto.getTitulo();
+
+        for (Recurso r : projeto.getListaDeRecursos()){
+            dados += "\n" + r.getNome() + " Preço: " + r.getValor();
+        }
+
+        return dados;
+    }
+
+    public String gerarRelatorioTodasTarefasFinalizadas(Projeto projeto, Pessoa solicitante) {
+        String dados = "\nPessoa solicitante do relatório: " + solicitante.getNome();
+        dados += "\nData da solicitação do relatório " + new Date().toString();
+        dados += "\nTarefas finalizadas do projeto: " + projeto.getTitulo();
+
+        for (TarefaAlocada t : projeto.getListaDeTarefasAlocadas()){
+            if(t.getTarefa().getStatus() == StatusTarefa.Encerrada){
+                dados += "\n" + t.getTarefa().getNome();
+            }
+        }
+
+        return dados;
+    }
+
+    public String gerarRelatorioTodasTarefasEmAndamento(Projeto projeto, Pessoa solicitante){
+        String dados = "\nPessoa solicitante do relatório: " + solicitante.getNome();
+        dados += "\nData da solicitação do relatório " + new Date().toString();
+        dados += "\nTarefas em andamento/aberto do projeto: " + projeto.getTitulo();
+
+        for (TarefaAlocada t : projeto.getListaDeTarefasAlocadas()){
+            if(t.getTarefa().getStatus() == StatusTarefa.EmAberto){
+                dados += "\n" + t.getTarefa().getNome();
+            }
+        }
+
+        return dados;
+    }
+
 }
