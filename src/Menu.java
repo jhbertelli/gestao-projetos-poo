@@ -240,7 +240,7 @@ public class Menu {
         String nome = EntradaSaidaDados.retornarTexto("Informe o nome da tarefa");
         if (inputCancelado(nome)) return;
 
-        Date prazo = EntradaSaidaDados.retornarData("Informe o prazo da tarefa");
+        Date prazo = EntradaSaidaDados.retornarData("Informe o prazo da tarefa, no formato: " + EntradaSaidaDados.DATE_FORMAT);
         if (inputCancelado(prazo)) return;
 
         var prioridade = EntradaSaidaDados.escolherPrioridade();
@@ -254,7 +254,7 @@ public class Menu {
         String nome = EntradaSaidaDados.retornarTexto("Informe o nome da tarefa");
         if (inputCancelado(nome)) return;
 
-        Date prazo = EntradaSaidaDados.retornarData("Informe o prazo da tarefa");
+        Date prazo = EntradaSaidaDados.retornarData("Informe o prazo da tarefa, no formato: " + EntradaSaidaDados.DATE_FORMAT);
         if (inputCancelado(prazo)) return;
 
         var prioridade = EntradaSaidaDados.escolherPrioridade();
@@ -369,10 +369,10 @@ public class Menu {
         String cliente = EntradaSaidaDados.retornarTexto("Informe o cliente do projeto");
         if (inputCancelado(cliente)) return;
 
-        var dataInicial = EntradaSaidaDados.retornarData("Informe a data inicial do projeto");
+        var dataInicial = EntradaSaidaDados.retornarData("Informe a data inicial do projeto, no formato: " + EntradaSaidaDados.DATE_FORMAT);
         if (inputCancelado(dataInicial)) return;
 
-        var dataFinal = EntradaSaidaDados.retornarData("Informe a data final do projeto");
+        var dataFinal = EntradaSaidaDados.retornarData("Informe a data final do projeto: " + EntradaSaidaDados.DATE_FORMAT);
         if (inputCancelado(dataFinal)) return;
 
         Projeto p = new Projeto(titulo, cliente, dataInicial, dataFinal);
@@ -391,7 +391,11 @@ public class Menu {
         var projeto = selecionarProjeto();
 
         Date dataFinalNova = EntradaSaidaDados.retornarData(
-            "Insira a nova data final do projeto.\nData final anterior: " + formatarDataParaString(projeto.getDataFinal())
+            String.format(
+                "Insira a nova data final do projeto, no formato: %s.\nData final anterior: %s",
+                EntradaSaidaDados.DATE_FORMAT,
+                formatarDataParaString(projeto.getDataFinal())
+            )
         );
 
         if (inputCancelado(dataFinalNova))
@@ -418,7 +422,6 @@ public class Menu {
     }
 
     private static String formatarDataParaString(Date data) {
-        //DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT);
         var formatadorData = new SimpleDateFormat("dd/MM/yyyy");
         String dataFormatada = formatadorData.format(data);
 

@@ -11,13 +11,13 @@ public class InputRecurso extends ResultadoInput {
 
         this.nome = nome;
 
-        String valorString = EntradaSaidaDados.retornarTexto("Informe o preço do recurso");
-        if (inputCancelado(valorString)) {
+        Double valor = EntradaSaidaDados.retornarReal("Informe o preço do recurso");
+        if (inputCancelado(valor)) {
             setCancelado(true);
             return;
         }
 
-        this.valor = Double.parseDouble(valorString);
+        this.valor = valor;
     }
 
     public String getNome() {

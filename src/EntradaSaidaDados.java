@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,10 +12,21 @@ import java.util.List;
 import static javax.swing.JOptionPane.*;
 
 public class EntradaSaidaDados {
-    private static final String DATE_FORMAT = "dd/MM/yyyy";
+    public static final String DATE_FORMAT = "dd/MM/yyyy";
 
     public static String retornarTexto(String mensagem) {
-        return showInputDialog(mensagem);
+        String message = "";
+
+        while (message.isEmpty()) {
+            String input = showInputDialog(mensagem);
+
+            if (input == null) return null;
+
+            message = input.trim();
+            if (message.isEmpty()) mostrarMensagem("Informe um valor.");
+        }
+
+        return message;
     }
 
     public static Date retornarData(String mensagem) {
@@ -39,8 +49,8 @@ public class EntradaSaidaDados {
             } catch (DateTimeParseException ex) {
                 retry = true;
                 showMessageDialog(
-                        null,
-                        "Você inseriu uma data inválida! Insira uma data válida, no formato: " + DATE_FORMAT
+                    null,
+                    "Você inseriu uma data inválida! Insira uma data válida, no formato: " + DATE_FORMAT
                 );
             }
         } while (retry);
@@ -52,8 +62,22 @@ public class EntradaSaidaDados {
         return Integer.parseInt(showInputDialog(mensagem));
     }
 
-    public static double retornarReal(String mensagem) {
-        return Double.parseDouble(showInputDialog(mensagem));
+    public static Double retornarReal(String mensagem) {
+        Double valor = null;
+
+        while (valor == null) {
+            String valorString = showInputDialog(mensagem);
+
+            if (valorString == null) return null;
+
+            try {
+                valor = Double.parseDouble(valorString);
+            } catch (NumberFormatException ex) {
+                mostrarMensagem("Por favor, informe um valor real válido.");
+            }
+        }
+
+        return valor;
     }
 
     public static int escolherProjeto(JComboBox<String> listaDeProjetos) {
@@ -93,9 +117,9 @@ public class EntradaSaidaDados {
         JComboBox opcoes = new JComboBox(lista);
         panel.add(opcoes);
 
-        int result = JOptionPane.showConfirmDialog(null, panel, "Prioridade", JOptionPane.OK_CANCEL_OPTION);
+        int result = showConfirmDialog(null, panel, "Prioridade", OK_CANCEL_OPTION);
 
-        if (result == JOptionPane.OK_OPTION) {
+        if (result == OK_OPTION) {
             int prioridadeSelecionada = opcoes.getSelectedIndex();
             // converte a prioridade para o enum
             return Prioridade.values()[prioridadeSelecionada];
@@ -113,9 +137,9 @@ public class EntradaSaidaDados {
         JComboBox opcoes = new JComboBox(lista);
         panel.add(opcoes);
 
-        int result = JOptionPane.showConfirmDialog(null, panel, "Status da tarefa", JOptionPane.OK_CANCEL_OPTION);
+        int result = showConfirmDialog(null, panel, "Status da tarefa", OK_CANCEL_OPTION);
 
-        if (result == JOptionPane.OK_OPTION) {
+        if (result == OK_OPTION) {
             int statusSelecionado = opcoes.getSelectedIndex();
             // converte o status para o enum
             return StatusTarefa.values()[statusSelecionado];
@@ -133,9 +157,9 @@ public class EntradaSaidaDados {
         JComboBox opcoes = new JComboBox(lista);
         panel.add(opcoes);
 
-        int result = JOptionPane.showConfirmDialog(null, panel, "Status do projeto", JOptionPane.OK_CANCEL_OPTION);
+        int result = showConfirmDialog(null, panel, "Status do projeto", OK_CANCEL_OPTION);
 
-        if (result == JOptionPane.OK_OPTION) {
+        if (result == OK_OPTION) {
             int statusSelecionado = opcoes.getSelectedIndex();
             // converte a prioridade para o enum
             return StatusProjeto.values()[statusSelecionado];
@@ -157,9 +181,9 @@ public class EntradaSaidaDados {
 
         panel.add(opcoes);
 
-        int result = JOptionPane.showConfirmDialog(null, panel, "Recurso", JOptionPane.OK_CANCEL_OPTION);
+        int result = showConfirmDialog(null, panel, "Recurso", OK_CANCEL_OPTION);
 
-        if (result == JOptionPane.OK_OPTION) {
+        if (result == OK_OPTION) {
             return recursos.get(opcoes.getSelectedIndex());
         } else {
             return null;
