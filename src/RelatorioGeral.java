@@ -12,7 +12,7 @@ public class RelatorioGeral extends Relatorio {
         String dados = "\nPessoa Solicitante do relatório: " + solicitante.getNome();
 
         dados += "\nData da solicitação do relatório " + new Date().toString();
-        dados += "Tarefas alocadas do projeto " + projeto.getTitulo();
+        dados += "\nTarefas alocadas do projeto " + projeto.getTitulo();
 
         for (TarefaAlocada t : projeto.getListaDeTarefasAlocadas()) {
             dados += "\nNome da tarefa " + t.getTarefa().getNome();
@@ -28,8 +28,8 @@ public class RelatorioGeral extends Relatorio {
             solicitante.getNome(),
             new Date().toString(),
             projeto.getTitulo(),
-            projeto.getDataInicial(),
-            projeto.getDataFinal(),
+            DateUtils.formatarDataParaString(projeto.getDataInicial()),
+            DateUtils.formatarDataParaString(projeto.getDataFinal()),
             projeto.getCliente(),
             projeto.getStatus()
         );

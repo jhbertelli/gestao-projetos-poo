@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -67,7 +66,7 @@ public class Menu {
     }
 
     private static void gerarRelatorio() {
-        if (!getHasProjects()) {
+        if (isProjetosVazios()) {
             EntradaSaidaDados.mostrarMensagem("Nenhum projeto encontrado. Adicione um projeto para poder gerar relatórios.");
             //criarProjeto();
             return;
@@ -76,16 +75,24 @@ public class Menu {
         JPanel panel = new JPanel(new GridLayout(1, 2));
 
         panel.add(new JLabel("Informe o tipo de relatório desejado:"));
-        String[] lista = { "1 - Dados gerais do projeto", "2 - Tarefas alocadas de um projeto", "2" +
-                "3 - Relatório de todas as tarefas de um projeto",
-                "4 - Relatório de todas as pessoas de um projeto", "4 - Relatório de todos os recursos de um projeto",
-                "6 -  Relatório de todas as tarefas 'ENCERRADAS' de um projeto", "7 - Gerar relatório de todas as tarefas 'EM ANDAMENTO' de um projeto" };
+        String[] lista = {
+            "1 - Dados gerais do projeto",
+            "2 - Tarefas alocadas de um projeto",
+            "3 - Relatório de todas as tarefas de um projeto",
+            "4 - Relatório de todas as pessoas de um projeto",
+            "5 - Relatório de todos os recursos de um projeto",
+            "6 -  Relatório de todas as tarefas 'ENCERRADAS' de um projeto",
+            "7 - Gerar relatório de todas as tarefas 'EM ANDAMENTO' de um projeto"
+        };
         JComboBox opcoes = new JComboBox(lista);
         panel.add(opcoes);
 
         int result = JOptionPane.showConfirmDialog(null, panel, "Cadastro", JOptionPane.OK_CANCEL_OPTION);
 
-        if (result != JOptionPane.OK_OPTION) return;
+        if (result != JOptionPane.OK_OPTION) {
+            EntradaSaidaDados.mostrarMensagem("Operação cancelada.");
+            return;
+        }
 
         int tipo = opcoes.getSelectedIndex();
 
@@ -134,7 +141,7 @@ public class Menu {
     }
 
     private static void adicionarRecurso() {
-        if (!getHasProjects()) {
+        if (isProjetosVazios()) {
             EntradaSaidaDados.mostrarMensagem("Nenhum projeto encontrado. Adicione um projeto para poder alocar um recurso nele.");
 //			criarProjeto();
 
@@ -154,7 +161,7 @@ public class Menu {
     private static void alocarTarefa() {
         Pessoa pessoaEscolhida;
         Tarefa tarefaEscolhida;
-        if (!getHasProjects()) {
+        if (isProjetosVazios()) {
             EntradaSaidaDados.mostrarMensagem(
                 "Nenhum projeto encontrado. Adicione um projeto para poder alocar uma tarefa nele."
             );
@@ -193,7 +200,7 @@ public class Menu {
     }
 
     private static void adicionarPessoa() {
-        if (!getHasProjects()) {
+        if (isProjetosVazios()) {
             EntradaSaidaDados.mostrarMensagem("Nenhum projeto encontrado. Adicione um projeto para poder adicionar uma pessoa nele.");
 //			criarProjeto();
             return;
@@ -231,7 +238,7 @@ public class Menu {
     }
 
     private static void adicionarTarefa() {
-        if (!getHasProjects()) {
+        if (isProjetosVazios()) {
             EntradaSaidaDados.mostrarMensagem("Nenhum projeto encontrado. Adicione um projeto para poder adicionar uma tarefa nele.");
 //			criarProjeto();
             return;
@@ -263,7 +270,7 @@ public class Menu {
     }
 
     private static void alterarStatusTarefa() {
-        if (!getHasProjects()) {
+        if (isProjetosVazios()) {
             EntradaSaidaDados.mostrarMensagem(
                 "Nenhum projeto encontrado. Adicione um projeto para poder alterar suas tarefas."
             );
@@ -305,7 +312,7 @@ public class Menu {
     }
 
     private static void alterarStatusProjeto() {
-        if (!getHasProjects()) {
+        if (isProjetosVazios()) {
             EntradaSaidaDados.mostrarMensagem(
                 "Nenhum projeto encontrado. Adicione um projeto para poder alterar seu status."
             );
@@ -335,7 +342,7 @@ public class Menu {
     }
 
     private static void removerRecurso() {
-        if (!getHasProjects()) {
+        if (isProjetosVazios()) {
             EntradaSaidaDados.mostrarMensagem(
                 "Nenhum projeto encontrado. Adicione um projeto para poder remover recursos."
             );
@@ -380,7 +387,7 @@ public class Menu {
     }
 
     private static void alterarDataFinalProjeto() {
-        if (!getHasProjects()) {
+        if (isProjetosVazios()) {
             EntradaSaidaDados.mostrarMensagem(
                 "Nenhum projeto encontrado. Adicione um projeto para poder alterar seu status."
             );
@@ -389,12 +396,13 @@ public class Menu {
         }
 
         var projeto = selecionarProjeto();
+        Date dataFinalAntiga = projeto.getDataFinal();
 
         Date dataFinalNova = EntradaSaidaDados.retornarData(
             String.format(
                 "Insira a nova data final do projeto, no formato: %s.\nData final anterior: %s",
                 EntradaSaidaDados.DATE_FORMAT,
-                formatarDataParaString(projeto.getDataFinal())
+                DateUtils.formatarDataParaString(dataFinalAntiga)
             )
         );
 
@@ -406,28 +414,19 @@ public class Menu {
         EntradaSaidaDados.mostrarMensagem(
             String.format(
                 "Data alterada com sucesso de: %s para %s.",
-                formatarDataParaString(projeto.getDataFinal()),
-                formatarDataParaString(dataFinalNova)
+                DateUtils.formatarDataParaString(dataFinalAntiga),
+                DateUtils.formatarDataParaString(dataFinalNova)
             )
         );
     }
 
-    private static boolean getHasProjects() {
-        return GestaoProjetos.retornarListaProjetos().getItemCount() > 0;
+    private static boolean isProjetosVazios() {
+        return GestaoProjetos.retornarListaProjetos().getItemCount() == 0;
     }
 
     private static Projeto selecionarProjeto() {
         int posicaoProjeto = EntradaSaidaDados.escolherProjeto(GestaoProjetos.retornarListaProjetos());
         return GestaoProjetos.retornarProjeto(posicaoProjeto);
-    }
-
-    private static String formatarDataParaString(Date data) {
-        var formatadorData = new SimpleDateFormat("dd/MM/yyyy");
-        String dataFormatada = formatadorData.format(data);
-
-        System.out.println(dataFormatada);
-
-        return dataFormatada;
     }
 
     // TODO: mudar isso para fazer cada input ter sua classe
