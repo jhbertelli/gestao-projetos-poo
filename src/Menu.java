@@ -283,7 +283,7 @@ public class Menu {
 
         if (listaTarefas == null) {
             EntradaSaidaDados.mostrarMensagem(
-                "Nenhuma tarefa encontrada neste projeto. Adicione tarefas para poder alterá-las."
+                "Nenhuma tarefa encontrada neste projeto. Adicione tarefas para poder alterar seu status."
             );
 
             return;
