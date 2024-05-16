@@ -379,8 +379,8 @@ public class Menu {
         var dataInicial = EntradaSaidaDados.retornarData("Informe a data inicial do projeto, no formato: " + EntradaSaidaDados.DATE_FORMAT);
         if (inputCancelado(dataInicial)) return;
 
-        var dataFinal = EntradaSaidaDados.retornarData("Informe a data final do projeto: " + EntradaSaidaDados.DATE_FORMAT);
-        if (inputCancelado(dataFinal)) return;
+        Date dataFinal = validarDataFinal(dataInicial, "Informe a data final do projeto: " + EntradaSaidaDados.DATE_FORMAT);
+        if (dataFinal == null) return;
 
         Projeto p = new Projeto(titulo, cliente, dataInicial, dataFinal);
         GestaoProjetos.adicionarProjeto(p);
@@ -398,10 +398,12 @@ public class Menu {
         var projeto = selecionarProjeto();
         Date dataFinalAntiga = projeto.getDataFinal();
 
-        Date dataFinalNova = EntradaSaidaDados.retornarData(
+        Date dataFinalNova = validarDataFinal(
+            projeto.getDataInicial(),
             String.format(
-                "Insira a nova data final do projeto, no formato: %s.\nData final anterior: %s",
+                "Insira a nova data final do projeto, no formato: %s.\nData inicial: %s\nData final anterior: %s",
                 EntradaSaidaDados.DATE_FORMAT,
+                DateUtils.formatarDataParaString(projeto.getDataInicial()),
                 DateUtils.formatarDataParaString(dataFinalAntiga)
             )
         );
@@ -437,6 +439,25 @@ public class Menu {
         }
 
         return false;
+    }
+
+    // TODO mudar esse método...
+    private static Date validarDataFinal(Date dataInicial, String mensagem) {
+        Date dataFinal;
+        boolean retry;
+
+        do {
+            retry = false;
+            dataFinal = EntradaSaidaDados.retornarData(mensagem);
+
+            if (inputCancelado(dataFinal)) return null;
+            if (dataFinal.toInstant().isBefore(dataInicial.toInstant())) {
+                EntradaSaidaDados.mostrarMensagem("A data final do projeto não pode ser menor que a data inicial do projeto.");
+                retry = true;
+            }
+        } while (retry);
+
+        return dataFinal;
     }
 }
 

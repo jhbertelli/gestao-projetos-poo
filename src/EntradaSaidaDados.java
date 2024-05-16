@@ -44,7 +44,7 @@ public class EntradaSaidaDados {
                 var localDate = LocalDate.parse(input, formatter);
 
                 // converte de LocalDate para date
-                date = java.sql.Date.valueOf(localDate);
+                date = new Date(java.sql.Date.valueOf(localDate).getTime());
                 retry = false;
             } catch (DateTimeParseException ex) {
                 retry = true;
