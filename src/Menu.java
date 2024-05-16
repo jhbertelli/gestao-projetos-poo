@@ -143,9 +143,11 @@ public class Menu {
 
         int posicaoProjeto = EntradaSaidaDados.escolherProjeto(GestaoProjetos.retornarListaProjetos());
         Projeto projetoEscolhido = GestaoProjetos.retornarProjeto(posicaoProjeto);
-        String nome = EntradaSaidaDados.retornarTexto("Informe o nome do recurso");
-        double valor = EntradaSaidaDados.retornarReal("Informe o preço do recurso");
-        Recurso recurso = new Recurso(nome, valor);
+
+        var inputRecurso = new InputRecurso();
+        if (inputRecurso.isCancelado()) return;
+
+        Recurso recurso = new Recurso(inputRecurso.getNome(), inputRecurso.getValor());
         projetoEscolhido.adicionarRecurso(recurso);
     }
 
@@ -166,6 +168,8 @@ public class Menu {
         if (projetoEscolhido.retornarListaTarefas() == null) {
             EntradaSaidaDados.mostrarMensagem("Adicione tarefas ao projeto");
             adicionarTarefa(projetoEscolhido);
+
+            if (projetoEscolhido.retornarListaTarefas() == null) return;
             tarefaEscolhida = projetoEscolhido.retornarTarefa(0);
         } else {
             int posicaoTarefa = EntradaSaidaDados.escolherTarefa(projetoEscolhido.retornarListaTarefas());
@@ -175,6 +179,8 @@ public class Menu {
         if (projetoEscolhido.retornarListaPessoas() == null) {
             EntradaSaidaDados.mostrarMensagem("Adicione pessoas ao projeto");
             adicionarPessoa(projetoEscolhido);
+
+            if (projetoEscolhido.retornarListaPessoas() == null) return;
             pessoaEscolhida = projetoEscolhido.retornarPessoa(0);
         } else {
             int posicaoPessoa = EntradaSaidaDados.escolherPessoa(projetoEscolhido.retornarListaPessoas());
@@ -194,8 +200,15 @@ public class Menu {
         }
 
         String nome = EntradaSaidaDados.retornarTexto("Informe o nome da pessoa");
+        if (inputCancelado(nome)) return;
+
         String sobrenome = EntradaSaidaDados.retornarTexto("Informe o sobrenome da pessoa");
-        Cargo cargo = new Cargo(EntradaSaidaDados.retornarTexto("Informe o cargo da pessoa no projeto"));
+        if (inputCancelado(sobrenome)) return;
+
+        String nomeCargo = EntradaSaidaDados.retornarTexto("Informe o cargo da pessoa no projeto");
+        if (inputCancelado(nomeCargo)) return;
+
+        Cargo cargo = new Cargo(nomeCargo);
         Pessoa p = new Pessoa(nome, sobrenome, cargo);
         int posicaoProjeto = EntradaSaidaDados.escolherProjeto(GestaoProjetos.retornarListaProjetos());
         Projeto projetoEscolhido = GestaoProjetos.retornarProjeto(posicaoProjeto);
@@ -204,8 +217,15 @@ public class Menu {
 
     private static void adicionarPessoa(Projeto projeto) {
         String nome = EntradaSaidaDados.retornarTexto("Informe o nome da pessoa");
+        if (inputCancelado(nome)) return;
+
         String sobrenome = EntradaSaidaDados.retornarTexto("Informe o sobrenome da pessoa");
-        Cargo cargo = new Cargo(EntradaSaidaDados.retornarTexto("Informe o cargo da pessoa no projeto"));
+        if (inputCancelado(sobrenome)) return;
+
+        String nomeCargo = EntradaSaidaDados.retornarTexto("Informe o cargo da pessoa no projeto");
+        if (inputCancelado(nomeCargo)) return;
+
+        Cargo cargo = new Cargo(nomeCargo);
         Pessoa p = new Pessoa(nome, sobrenome, cargo);
         projeto.adicionarPessoa(p);
     }
@@ -218,7 +238,11 @@ public class Menu {
         }
 
         String nome = EntradaSaidaDados.retornarTexto("Informe o nome da tarefa");
+        if (inputCancelado(nome)) return;
+
         Date prazo = EntradaSaidaDados.retornarData("Informe o prazo da tarefa");
+        if (inputCancelado(prazo)) return;
+
         var prioridade = EntradaSaidaDados.escolherPrioridade();
         Tarefa t = new Tarefa(nome, prazo, prioridade);
         int posicaoProjeto = EntradaSaidaDados.escolherProjeto(GestaoProjetos.retornarListaProjetos());
@@ -228,7 +252,11 @@ public class Menu {
 
     private static void adicionarTarefa(Projeto projeto) {
         String nome = EntradaSaidaDados.retornarTexto("Informe o nome da tarefa");
+        if (inputCancelado(nome)) return;
+
         Date prazo = EntradaSaidaDados.retornarData("Informe o prazo da tarefa");
+        if (inputCancelado(prazo)) return;
+
         var prioridade = EntradaSaidaDados.escolherPrioridade();
         Tarefa t = new Tarefa(nome, prazo, prioridade);
         projeto.adicionarTarefa(t);
@@ -262,10 +290,8 @@ public class Menu {
 
         var statusNovo = EntradaSaidaDados.escolherStatusTarefa();
 
-        if (statusNovo == null) {
-            EntradaSaidaDados.mostrarMensagem("Operação cancelada.");
+        if (inputCancelado(statusNovo))
             return;
-        }
 
         tarefa.setStatus(statusNovo);
 
@@ -294,10 +320,8 @@ public class Menu {
 
         var statusNovo = EntradaSaidaDados.escolherStatusProjeto();
 
-        if (statusNovo == null) {
-            EntradaSaidaDados.mostrarMensagem("Operação cancelada.");
+        if (inputCancelado(statusNovo))
             return;
-        }
 
         projeto.setStatus(statusNovo);
 
@@ -332,19 +356,24 @@ public class Menu {
 
         Recurso recurso = EntradaSaidaDados.escolherRecurso(listaRecursos);
 
-        if (recurso == null) {
-            EntradaSaidaDados.mostrarMensagem("Operação cancelada.");
+        if (inputCancelado(recurso))
             return;
-        }
 
         listaRecursos.remove(recurso);
     }
 
     private static void criarProjeto() {
         String titulo = EntradaSaidaDados.retornarTexto("Informe o título do projeto");
+        if (inputCancelado(titulo)) return;
+
         String cliente = EntradaSaidaDados.retornarTexto("Informe o cliente do projeto");
+        if (inputCancelado(cliente)) return;
+
         var dataInicial = EntradaSaidaDados.retornarData("Informe a data inicial do projeto");
+        if (inputCancelado(dataInicial)) return;
+
         var dataFinal = EntradaSaidaDados.retornarData("Informe a data final do projeto");
+        if (inputCancelado(dataFinal)) return;
 
         Projeto p = new Projeto(titulo, cliente, dataInicial, dataFinal);
         GestaoProjetos.adicionarProjeto(p);
@@ -365,10 +394,8 @@ public class Menu {
             "Insira a nova data final do projeto.\nData final anterior: " + formatarDataParaString(projeto.getDataFinal())
         );
 
-        if (dataFinalNova == null) {
-            EntradaSaidaDados.mostrarMensagem("Operação cancelada.");
+        if (inputCancelado(dataFinalNova))
             return;
-        }
 
         projeto.setDataFinal(dataFinalNova);
 
@@ -398,6 +425,16 @@ public class Menu {
         System.out.println(dataFormatada);
 
         return dataFormatada;
+    }
+
+    // TODO: mudar isso para fazer cada input ter sua classe
+    private static <T> boolean inputCancelado(T input) {
+        if (input == null) {
+            EntradaSaidaDados.mostrarMensagem("Operação cancelada.");
+            return true;
+        }
+
+        return false;
     }
 }
 
